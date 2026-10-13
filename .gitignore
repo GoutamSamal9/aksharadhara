@@ -9,3 +9,9 @@ out/
 *.tsbuildinfo
 .env*
 !.env.example
+
+# Only this owner-approved public value is intentionally versioned.
+!.env.production
+# Preserve local source font download without publishing the duplicate archive.
+/Noto_Serif_Oriya.zip
+/release-artifacts/

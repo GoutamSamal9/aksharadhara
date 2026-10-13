@@ -1,0 +1,31 @@
+{
+  "sourceBytes": 236068,
+  "woff2Bytes": 94748,
+  "reductionPercent": 59.86,
+  "sourceSha256": "a076ad30f20dc2f407eff9735ff0a714bf98fb2448a70a94b7abb2435794ef34",
+  "woff2Sha256": "24ad6c71d205c6aa947d527dbda60c7f72f1a3c340e6bbfc4f1902c61e5b0132",
+  "glyphCount": 973,
+  "tables": [
+    "GDEF",
+    "GPOS",
+    "GSUB",
+    "HVAR",
+    "OS/2",
+    "STAT",
+    "cmap",
+    "fvar",
+    "gasp",
+    "glyf",
+    "gvar",
+    "head",
+    "hhea",
+    "hmtx",
+    "loca",
+    "maxp",
+    "name",
+    "post",
+    "prep"
+  ],
+  "removedTables": [],
+  "verification": "All retained decompressed SFNT tables byte-identical except head checksumAdjustment and WOFF2 lossless flag; glyph order, cmap and name/license metadata unchanged. No glyph subsets or WOFF2 table transforms. Only DSIG digital signature removal is permitted; it does not affect rendering."
+}

@@ -113,7 +113,11 @@ self.addEventListener('fetch', event => {
   event.respondWith((async () => {
     if (request.mode === 'navigate') {
       try { return await fetch(request); } catch {
-        return await offlineMatch(request) || await (await caches.open(SHELL)).match('/offline/') || new Response('Connect to the internet to download this book.', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+        const cached = await offlineMatch(request);
+        if (cached) return cached;
+        const fallback = await (await caches.open(SHELL)).match('/offline/');
+        if (fallback && url.pathname !== '/offline/') return Response.redirect(new URL(`/offline/?from=${encodeURIComponent(url.pathname)}`, self.location.origin).href, 302);
+        return new Response('ଏହି ପୃଷ୍ଠା ପଢ଼ିବା ପାଇଁ ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ଆବଶ୍ୟକ।', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
       }
     }
     // Next RSC requests must never receive a cached HTML document.

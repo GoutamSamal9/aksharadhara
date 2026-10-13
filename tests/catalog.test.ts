@@ -23,3 +23,10 @@ describe('metadata catalog', () => {
     expect(filterAuthors(authors, 'gangadhar', 'novels')).toHaveLength(0);
   });
 });
+const { readCatalogFilters, catalogFilterUrl, defaultCatalogFilters } = await import('../src/lib/search');
+it('canonicalizes defaults and validates author/genre/sort URL inputs', () => {
+  const filters = readCatalogFilters('?author=unknown&genre=invalid&sort=bad&q=ଓଡ଼ିଆ', authors.map(a => a.id));
+  expect(filters).toEqual({ ...defaultCatalogFilters, q: 'ଓଡ଼ିଆ' });
+  const url = catalogFilterUrl('https://aksharadhara.org/books/?author=all&sort=asc&genre=all#book-search', defaultCatalogFilters, 'books');
+  expect(url).toBe('/books/#book-search');
+});

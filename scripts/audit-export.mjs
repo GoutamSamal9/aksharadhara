@@ -19,12 +19,14 @@ for(const path of paths){
   assert.equal(Boolean(doc.querySelector('meta[name=robots]')?.getAttribute('content')?.includes('noindex')),noindex,`${path} index policy`);
   for(const node of doc.querySelectorAll('script[type="application/ld+json"]'))JSON.parse(node.textContent);
   for(const node of doc.querySelectorAll('script[src],link[rel=stylesheet]')){const url=new URL(node.getAttribute('src')??node.getAttribute('href'),origin);if(url.origin===origin){await access('out'+decodeURIComponent(url.pathname));assets++;}}
+  if(path==='/feedback/'){assert.ok(html.includes('917381699797'),'approved public contact in static build');assert.equal(doc.querySelector('button[type=submit]')?.hasAttribute('disabled'),false,'configured feedback enabled');assert.ok(!doc.querySelector('a[href^="https://wa.me/"]'),'no draft/external action before interaction');}
   if(path.startsWith('/read/')){assert.equal(doc.querySelectorAll('.verse-line').length,8);assert.equal(doc.querySelector('[data-reader-book]')?.getAttribute('data-reader-book'),'demo-garden');assert.equal(doc.querySelectorAll('.site-header').length,0);}
   if(['/feedback/','/my-library/','/offline/','/read/demo-garden/'].includes(path))assert.ok(!doc.querySelector('script[src*="cloudflareinsights"]'),`${path} analytics excluded`);
 }
 const sitemap=await readFile('out/sitemap.xml','utf8');assert.ok(!sitemap.includes('demo'));assert.ok(!sitemap.includes('/my-library/'));assert.ok(sitemap.includes('/feedback/'));assert.equal((sitemap.match(/<loc>/g)??[]).length,9);
 const manifest=JSON.parse(await readFile('out/manifest.webmanifest','utf8'));assert.equal(manifest.lang,'or');for(const icon of manifest.icons)await access('out'+icon.src);
 const shell=JSON.parse((await readFile('out/offline-manifest.js','utf8')).match(/= (.*);/)[1]);assert.ok(!shell.urls.some(u=>u.startsWith('/read/')||u.startsWith('/books/')||u.startsWith('/content/')));for(const u of shell.urls){const file='out'+(u.endsWith('/')?u+'index.html':decodeURIComponent(u));await access(file);if(u.endsWith('.js')||u.endsWith('.html')||u.endsWith('/'))assert.ok(!(await readFile(file,'utf8')).includes('ଏହା ଏକ ନମୁନା ପାଠ୍ୟ।'),'shell must not contain downloadable book text');}
+assert.ok(shell.urls.includes('/fonts/AnekOdia-Variable.woff2'));assert.ok(shell.urls.includes('/fonts/NotoSerifOriya-Variable.woff2'));assert.ok(!shell.urls.some(u=>u.endsWith('.ttf')),'only WOFF2 delivery cached');
 const payload=JSON.parse(await readFile('out/content/books/demo-garden.json','utf8'));assert.equal(payload.demo,true);assert.equal(payload.id,'demo-garden');
 await access('out/404.html');
 console.log(`Export verified: ${paths.length} static HTML routes, unique SEO, ${assets} asset references, 9 indexed sitemap URLs, demo exclusions, ${shell.urls.length} shell files, selective payload, and PWA icons.`);

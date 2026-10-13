@@ -22,20 +22,21 @@ npm run preview                # serve out/ locally
 ## Pilot features
 
 - Home, searchable/filterable books, author pages, source/rights details, and chapter/stanza reader.
-- Reader themes, text size, line spacing, width, bookmarks, and stable reading progress.
+- Reader themes, text size, line spacing, width, bookmarks, stable reading progress, and shareable chapter/stanza URLs with back/forward navigation.
+- Invalid reading locations show a recovery panel without silently changing saved progress; unavailable offline routes use an explicit offline fallback.
 - IndexedDB state with a version 2 upgrade that preserves existing reader state; selected-book offline downloads and local removal.
 - Install manifest, service worker shell, generated book JSON, and storage-error messages.
 - Static metadata, sitemap, and canonicals for `https://aksharadhara.org`.
 - Feedback drafts that open WhatsApp only when a public maintainer number is configured; the user reviews and sends them.
 - Optional manually configured Cloudflare Web Analytics; no beacon on reader, personal library, or feedback pages.
 
-Anek Odia is self-hosted with OFL licensing; bundled Noto Sans Oriya is an optional font collection. Noto Serif Oriya is not bundled. Real Android/iOS shaping and native editorial review remain required.
+Noto Serif Oriya and Anek Odia are self-hosted as licensed WOFF2 fonts. Compression preserves all glyphs and shaping/variation tables, verified against the original fonts; Noto Sans Oriya is an optional font collection. Real Android/iOS shaping and native editorial review remain required.
 
 ## Configuration and deployment
 
-Copy `.env.example` to `.env.local` and configure only public values. `NEXT_PUBLIC_FEEDBACK_WHATSAPP_NUMBER` is an international number containing digits only. `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN` is an optional public site token. These values are embedded at build time; never place credentials here. Blank values disable the corresponding integration.
+Copy `.env.example` to `.env.local` and configure only public values. `NEXT_PUBLIC_FEEDBACK_WHATSAPP_NUMBER` is an international number containing digits only. `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN` is an optional public site token. These values are embedded at build time; never place credentials here. The example config sets public feedback number `917381699797`. A tracked `.env.production` contains that public number only; `.env.local` is ignored. A blank analytics token disables analytics.
 
-See [deployment instructions](docs/DEPLOYMENT.md) for Cloudflare Pages Free, GitHub, custom domain, and HTTPS setup. No public repository or deployment was performed. This managed workspace prevents `.git` writes; repository initialization and remote setup remain external steps. No approval escalation is needed for local implementation.
+See [deployment instructions](docs/DEPLOYMENT.md) for Cloudflare Pages Free, GitHub, custom domain, and HTTPS setup. The user has authorized pushing to [GoutamSamal9/aksharadhara](https://github.com/GoutamSamal9/aksharadhara) (`git@github.com:GoutamSamal9/aksharadhara.git`); this session has not completed a push or deployed the site. This managed workspace prevents `.git` writes; Git initialization and remote-history reconciliation remain blocked here. No approval escalation is needed for local implementation.
 
 ## Product and rights
 
@@ -43,4 +44,4 @@ See [deployment instructions](docs/DEPLOYMENT.md) for Cloudflare Pages Free, Git
 
 [LICENSE](LICENSE) covers code only. Literary content and font assets have separate licensing: [CONTENT_LICENSES.md](CONTENT_LICENSES.md), [content policy](CONTENT_POLICY.md), and [font attribution](public/fonts/README.md). Authentic literature requires separate work and edition evidence and manual proofreading before publication. See [verification](docs/VERIFICATION.md) for recorded results and remaining release checks.
 
-The final primary-agent run passed 48 unit/content tests, typecheck, lint, static build, and the generated-export audit. Twelve Playwright cases are configured, but browser execution remains blocked by the managed sandbox’s localhost restriction; see docs/VERIFICATION.md.
+The final primary-agent run passed 63 unit/content tests, typecheck, lint, static build, and the generated-export audit. Twenty Playwright cases are configured, but browser execution remains blocked by the managed sandbox’s localhost restriction; see docs/VERIFICATION.md.

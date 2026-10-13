@@ -1,10 +1,11 @@
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FeedbackForm } from '../src/components/FeedbackForm';
 import { buildWhatsAppUrl, feedbackCategories, validWhatsAppNumber } from '../src/lib/feedback';
 import { books, summary } from '../src/lib/catalog';
-const number = '919876543210';
+const number = '917381699797';
+beforeEach(() => { history.replaceState(history.state, '', '/feedback/'); });
 describe('explicit WhatsApp feedback preparation', () => {
   it('encodes the chosen category and source reference without sending anything', () => {
     for (const category of feedbackCategories) {
@@ -43,4 +44,21 @@ describe('explicit WhatsApp feedback preparation', () => {
     fireEvent.submit(screen.getByRole('button', { name: /Prepare feedback/ }).closest('form')!);
     expect(screen.getByRole('alert')).toHaveTextContent('Category and message are required');
   });
+});
+it('prepares the exact configured contact with multiline Odia, punctuation and optional references', () => {
+  const message = 'ପ୍ରଥମ ଧାଡ଼ି।\nଦ୍ୱିତୀୟ ଧାଡ଼ି & # + ? "quote"';
+  const url = new URL(buildWhatsAppUrl(number, { category: 'general', message, book: 'ଅକ୍ଷରର ବଗିଚା', reference: 'ସକାଳ / morning-1' }));
+  expect(url.pathname).toBe('/917381699797');
+  expect(url.searchParams.get('text')).toBe(`Aksharadhara Feedback\nCategory: General feedback\nBook: ଅକ୍ଷରର ବଗିଚା\nChapter / page: ସକାଳ / morning-1\nMessage: ${message}`);
+  expect(feedbackCategories.map(c => c.id)).toEqual(expect.arrayContaining(['general', 'author-request', 'contribution', 'correction']));
+});
+
+it('preselects only valid contribution categories from static share links', () => {
+  history.replaceState(history.state, '', '/feedback/?category=contribution');
+  const { unmount } = render(<FeedbackForm books={[]} number={number}/>);
+  expect(screen.getByLabelText(/Category/)).toHaveValue('contribution');
+  unmount(); history.replaceState(history.state, '', '/feedback/?category=invalid');
+  render(<FeedbackForm books={[]} number={number}/>);
+  expect(screen.getByLabelText(/Category/)).toHaveValue('');
+  expect(screen.queryByRole('link', { name: /Open WhatsApp/ })).not.toBeInTheDocument();
 });

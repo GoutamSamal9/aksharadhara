@@ -54,6 +54,6 @@ export function ReadingProvider({ children }: { children: ReactNode }) {
   const update = useCallback((fn: (state: ReadingState) => ReadingState) => setState(fn), []);
   const downloadBook = useCallback(async (book: Book | BookSummary) => { await storeBook(book); setOfflineBooks(await listOfflineBooks()); }, []);
   const removeBook = useCallback(async (slug: string) => { await deleteBook(slug); setOfflineBooks(await listOfflineBooks()); }, []);
-  return <ReadingContext.Provider value={{ state, update, ready, error, offlineReady, offlineBooks, downloadBook, removeBook }}>{error && <div className="storage-error" role="alert">{error}</div>}{children}</ReadingContext.Provider>;
+  return <ReadingContext.Provider value={{ state, update, ready, error, offlineReady, offlineBooks, downloadBook, removeBook }}>{error && <div className="storage-error" role="alert"><span lang="or">ସ୍ଥାନୀୟ ସଞ୍ଚୟରେ ସମସ୍ୟା ହୋଇଛି। ପଢ଼ିପାରିବେ; କିଛି ପରିବର୍ତ୍ତନ ସଞ୍ଚୟ ହୋଇନପାରେ।</span> <span lang="en">{error}</span></div>}{children}</ReadingContext.Provider>;
 }
 export default ReadingProvider;

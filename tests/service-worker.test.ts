@@ -82,7 +82,13 @@ it('rolls back incomplete files on quota failure with an actionable acknowledgem
 it('serves selected reader documents offline and sends unavailable routes to the offline library', async () => {
   const sw = worker(); await sw.install(); await sw.message('CACHE_BOOK'); sw.offline();
   expect(await (await sw.request('/read/demo-garden/')).text()).toContain('data-reader-book');
-  expect(await (await sw.request('/read/not-downloaded/')).text()).toContain('Offline library');
+  const redirect = await sw.request('/read/not-downloaded/');
+  expect(redirect.status).toBe(302);
+  const destination = new URL(redirect.headers.get('Location')!);
+  expect(destination.pathname).toBe('/offline/');
+  expect(destination.searchParams.get('from')).toBe('/read/not-downloaded/');
+  expect(await redirect.text()).not.toContain('Offline library');
+  expect(await (await sw.request(destination.pathname + destination.search)).text()).toContain('Offline library');
   expect(await (await sw.request('/_next/static/reader.js', false)).text()).toBe('reader');
   await expect(sw.request('/read/demo-garden/?_rsc=1', false, true)).rejects.toThrow('Disconnected');
 });
