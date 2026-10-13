@@ -1,0 +1,4 @@
+import type { Author, BookSummary } from '../types';
+export function normalized(value: string) { return value.normalize('NFC').toLocaleLowerCase().trim(); }
+export function filterBooks(books: BookSummary[], query: string, author='all', genre='all', sort='asc') { const q=normalized(query); return books.filter(b => (author==='all'||b.authorId===author)&&(genre==='all'||b.genres.includes(genre))&&normalized([b.title,b.titleRomanized,b.author,...b.aliases].join(' ')).includes(q)).sort((a,b)=>(sort==='desc'?-1:1)*a.title.localeCompare(b.title,'or')); }
+export function filterAuthors(authors: Author[], query: string, genre='all', letter='all') { const q=normalized(query); return authors.filter(a => normalized(`${a.name} ${a.nameRomanized}`).includes(q)&&(genre==='all'||a.genres.includes(genre))&&(letter==='all'||a.name.startsWith(letter))).sort((a,b)=>a.name.localeCompare(b.name,'or')); }

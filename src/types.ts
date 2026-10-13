@@ -1,0 +1,9 @@
+export type Block = { id: string; type: 'verse' | 'prose'; lines: string[]; sourcePage: number | null; editorialNotes?: string[] };
+export type Chapter = { id: string; title: string; blocks: Block[]; editorialNotes?: string[] };
+export type Book = { id: string; slug: string; title: string; titleRomanized: string; authorId: string; author: string; aliases: string[]; language: string; genres: string[]; description: string; demo: boolean; source: { url: string | null; institution: string; editionYear: number | null; editionDescription?: string }; rights: { workStatus: string; editionStatus: string; evidence: string[]; workEvidence?: string[]; editionEvidence?: string[]; reviewedBy?: string; reviewedAt?: string }; verification: { status: string; proofreadAgainstSource: boolean; reviewedBy?: string; reviewedAt?: string }; chapters: Chapter[] };
+export type BookSummary = Omit<Book, 'chapters'> & { chapterCount: number; readable: boolean };
+export type Author = { id: string; slug: string; name: string; nameRomanized: string; description?: string; period?: string; genres: string[]; sources: { title: string; url: string }[]; verified: boolean; demo?: boolean };
+export type Preferences = { theme: 'sepia' | 'light' | 'dark'; fontSize: number; lineHeight: number; width: number };
+export type Position = { bookId: string; chapterId: string; blockId: string; updatedAt: number };
+export type Bookmark = Position & { key: string };
+export type ReadingState = { preferences: Preferences; progress: Record<string, Position>; bookmarks: Bookmark[] };

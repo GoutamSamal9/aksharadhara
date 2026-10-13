@@ -1,0 +1,18 @@
+{
+  "id":"demo-garden","slug":"demo-garden","title":"ଅକ୍ଷରର ବଗିଚା","titleRomanized":"Aksharara Bagicha","authorId":"akshara-demo","author":"ଅକ୍ଷର ନମୁନା","aliases":["Akshara demo","sample","garden"],"language":"or","genres":["poetry"],
+  "description":"ପଢ଼ିବାର ଅନୁଭବ ପରୀକ୍ଷା ପାଇଁ ଏହି ନମୁନା। ଏହା କୌଣସି ଐତିହାସିକ କବିଙ୍କ ରଚନା ନୁହେଁ।",
+  "demo":true,"source":{"url":null,"institution":"Original interface demonstration; not a historical transcription","editionYear":null},
+  "rights":{"workStatus":"demo-original","editionStatus":"demo-original","evidence":["Original sample text created for this project, released under CC0-1.0."]},
+  "verification":{"status":"demo","proofreadAgainstSource":false},
+  "chapters":[
+    {"id":"morning","title":"ସକାଳ · ନମୁନା","blocks":[
+      {"id":"morning-1","type":"verse","lines":["ଏହା ଏକ ନମୁନା ପାଠ୍ୟ।","ଅକ୍ଷର ମଧ୍ୟରେ ଆମେ ପଢ଼ିବା ଶିଖୁ।"],"sourcePage":null},
+      {"id":"morning-2","type":"verse","lines":["ସକାଳର ଆଲୋକରେ ବହି ଖୋଲିବା।","ଧୀରେ ଧୀରେ ପ୍ରତି ଧାଡ଼ି ପଢ଼ିବା।"],"sourcePage":null},
+      {"id":"morning-3","type":"verse","lines":["ଏହି ଧାଡ଼ି ନମୁନା ପାଇଁ ଲେଖା।","ଏଠାରେ ରହିଛି ଏକ ନୂଆ ବିରାମ।"],"sourcePage":null},
+      {"id":"morning-4","type":"verse","lines":["ଛୋଟ ପରଦାରେ ମଧ୍ୟ ପାଠ୍ୟ ପଢ଼ିବା।","ଆବଶ୍ୟକ ହେଲେ ଅକ୍ଷର ବଡ଼ କରିବା।"],"sourcePage":null}]},
+    {"id":"evening","title":"ସନ୍ଧ୍ୟା · ନମୁନା","blocks":[
+      {"id":"evening-1","type":"verse","lines":["ଆଉ ଏକ ପୃଷ୍ଠା ଖୋଲିବା।","ନିଜ ପସନ୍ଦର ରଙ୍ଗ ବାଛିବା।"],"sourcePage":null},
+      {"id":"evening-2","type":"verse","lines":["ଯେଉଁଠି ପଢ଼ିବା ବନ୍ଦ କରିବା।","ପୁଣି ସେଇଠୁ ଆରମ୍ଭ କରିବା।"],"sourcePage":null},
+      {"id":"evening-3","type":"verse","lines":["ଏହା ଐତିହାସିକ କବିତା ନୁହେଁ।","କେବଳ ପଢ଼ିବାର ଏକ ନମୁନା।"],"sourcePage":null}]}
+  ]
+}

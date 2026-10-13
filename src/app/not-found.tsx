@@ -1,0 +1,1 @@
+export default function NotFound(){return <div className="section page empty-state"><span aria-hidden="true">❧</span><h1>ଏହି ପୃଷ୍ଠା ମିଳିଲା ନାହିଁ।</h1><p>This page or book is unavailable.</p><a href="/books/" className="button primary">ବହି ଦେଖନ୍ତୁ · Browse books →</a></div>;}

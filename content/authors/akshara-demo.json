@@ -1,0 +1,13 @@
+{
+  "id": "akshara-demo",
+  "slug": "akshara-demo",
+  "name": "ଅକ୍ଷର ନମୁନା",
+  "nameRomanized": "Akshara demo",
+  "description": "ମୂଳ ନମୁନା ପାଠ୍ୟ ପାଇଁ ଅକ୍ଷର ପ୍ରକଳ୍ପର ପରିଚୟ। ଏହା ଐତିହାସିକ ଲେଖକଙ୍କ ପରିଚୟ ନୁହେଁ।",
+  "genres": [
+    "poetry"
+  ],
+  "sources": [],
+  "verified": false,
+  "demo": true
+}

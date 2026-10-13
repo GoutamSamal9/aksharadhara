@@ -1,0 +1,9 @@
+import { beforeEach, expect, it, vi } from 'vitest';
+import { initialState, loadState, saveState } from '../src/db';
+const db = vi.hoisted(() => ({ get: vi.fn(), put: vi.fn(), close: vi.fn() }));
+vi.mock('idb', () => ({ openDB: vi.fn(async () => db) }));
+beforeEach(() => { vi.clearAllMocks(); db.get.mockResolvedValue(undefined); db.put.mockResolvedValue(undefined); });
+it('restores missing storage to isolated default state', async () => { const state = await loadState(); expect(state).toEqual(initialState); state.preferences.theme='dark'; expect(initialState.preferences.theme).toBe('sepia'); expect(db.close).toHaveBeenCalledOnce(); });
+it('clamps corrupt preferences and rejects malformed positions/bookmarks',async()=>{ db.get.mockResolvedValue({preferences:{theme:'invalid',fontSize:1000,lineHeight:0,width:NaN},progress:{bad:{bookId:'other',chapterId:'x',blockId:'y',updatedAt:1}},bookmarks:[{key:'wrong',bookId:'demo',chapterId:'x',blockId:'y',updatedAt:1}]}); const state=await loadState(); expect(state.preferences).toEqual({theme:'sepia',fontSize:36,lineHeight:1.5,width:720}); expect(state.progress).toEqual({}); expect(state.bookmarks).toEqual([]); });
+it('preserves stable saved locations and bookmark keys',async()=>{const pos={bookId:'demo-garden',chapterId:'evening',blockId:'evening-2',updatedAt:10};const saved={...initialState,progress:{'demo-garden':pos},bookmarks:[{...pos,key:'demo-garden/evening/evening-2'}]}; db.get.mockResolvedValue(saved); expect(await loadState()).toEqual(saved); await saveState(saved); expect(db.put).toHaveBeenCalledWith('state',saved,'reader'); });
+it('propagates quota failures and closes the connection',async()=>{db.put.mockRejectedValue(new Error('quota'));await expect(saveState(initialState)).rejects.toThrow('quota');expect(db.close).toHaveBeenCalledOnce();});

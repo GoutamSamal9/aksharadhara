@@ -1,0 +1,53 @@
+{
+  "name": "aksharadhara",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Free open-source Odia digital library \u2014 Next.js static export",
+  "engines": {
+    "node": ">=22.17.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run && node --test scripts/content-gate.test.mjs",
+    "test:e2e": "playwright test",
+    "validate:content": "node scripts/validate-content.mjs",
+    "build": "npm run validate:content && node scripts/export-content.mjs && next build --webpack && node scripts/build-offline.mjs",
+    "preview": "node scripts/serve-static.mjs",
+    "check": "npm run validate:content && npm run typecheck && npm run lint && npm test && npm run build && npm run audit:export",
+    "audit:export": "node scripts/audit-export.mjs"
+  },
+  "dependencies": {
+    "idb": "7.1.1",
+    "next": "16.2.9",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.53.0",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
+    "@testing-library/user-event": "14.6.1",
+    "@types/node": "22.15.29",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "autoprefixer": "10.4.21",
+    "eslint": "9.31.0",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "jsdom": "26.1.0",
+    "postcss": "8.5.6",
+    "tailwindcss": "3.4.19",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.56.1",
+    "vite": "6.4.1",
+    "vitest": "4.1.10"
+  },
+  "overrides": {
+    "rollup": "4.61.1",
+    "@eslint/config-array": "0.21.0",
+    "@eslint/eslintrc": "3.3.1"
+  }
+}
